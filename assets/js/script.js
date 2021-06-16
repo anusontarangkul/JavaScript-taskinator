@@ -15,12 +15,24 @@ var taskFormHandler = function () {
 
     event.preventDefault();
 
+    var isEdit = formEl.hasAttribute("data-task-id");
 
-    var taskDataObj = {
-        name: taskNameInput,
-        type: taskTypeInput
+
+
+    // has attribute, so get task id and call function to complete edit process
+    if (isEdit) {
+        var taskId = formEl.getAttribute("data-task-id");
+        completeEdit(taskNameInput, taskTypeInput, taskId);
     }
-    createTaskEl(taskDataObj);
+    // no data attribue, so create object and pass to createTaskEl
+    else {
+        var taskDataObj = {
+            name: taskNameInput,
+            type: taskTypeInput
+        };
+        createTaskEl(taskDataObj)
+    }
+
     formEl.reset();
 }
 
@@ -137,6 +149,19 @@ var editTask = function (taskId) {
     document.querySelector("#save-task").textContent = "Save Task";
 
     formEl.setAttribute("data-task-id", taskId);
+}
+
+var completeEdit = function (taskName, taskType, taskId) {
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+    // set new values
+    taskSelected.querySelector("h3.task-name").textContent = taskName;
+    taskSelected.querySelector("span.task-type").textContent = taskType;
+
+    alert("Task Updated");
+
+    formEl.removeAttribute("data-task-id");
+    document.querySelector("#save-task").textContent = "Add Task";
 }
 
 formEl.addEventListener("submit", taskFormHandler);
