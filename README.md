@@ -2,6 +2,8 @@
 
 A kanban board app organizing your tasks.
 
+![gif](./assets/screenshot/gif.gif)
+
 ### Features
 
 - Enter Task Name
